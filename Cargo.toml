@@ -1,0 +1,27 @@
+# Workspace for the authoritative-Rust side of "UE as just a renderer".
+#
+# See docs/evaluation.md for the full feasibility analysis and bridge/README.md
+# for the UE-side (C++ adapter) integration contract.
+#
+# Deliberately ZERO external dependencies: the wire format is explicit and
+# hand-rolled so the UE C++ side can mirror it byte-for-byte, and so the crates
+# build in any environment without crate-registry access.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/ue-renderer-protocol",
+    "crates/ue-authority",
+    "crates/ue-bridge-ffi",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/baadc0de/ue-is-renderer"
+
+[profile.release]
+# Keep unwinding enabled so the FFI boundary's catch_unwind actually catches
+# panics instead of aborting the (Unreal) host process. See bridge/README.md.
+panic = "unwind"

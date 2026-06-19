@@ -1,0 +1,17 @@
+[package]
+name = "ue-bridge-ffi"
+description = "C-ABI surface that an Unreal Engine C++ plugin links against to drive the renderer from the authoritative Rust core."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+# cdylib: a .dll/.so the UE plugin loads (preserves hot-reload of the Rust side).
+# staticlib: a .lib/.a for linking directly into the module binary.
+# rlib: so this crate's own integration tests can call the exported fns.
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[dependencies]
+ue-renderer-protocol = { path = "../ue-renderer-protocol" }
+ue-authority = { path = "../ue-authority" }

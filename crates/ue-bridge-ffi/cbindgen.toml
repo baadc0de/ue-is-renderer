@@ -1,0 +1,26 @@
+# Config for generating bridge/include/ue_bridge.h from this crate.
+#
+#   cargo install cbindgen
+#   cbindgen --config crates/ue-bridge-ffi/cbindgen.toml \
+#            --crate ue-bridge-ffi --output bridge/include/ue_bridge.h
+#
+# A hand-written, kept-in-sync copy lives at bridge/include/ue_bridge.h so the
+# contract is reviewable without running cbindgen.
+
+language = "C"
+include_guard = "UE_BRIDGE_H"
+pragma_once = false
+tab_width = 4
+documentation = true
+documentation_style = "doxy"
+cpp_compat = true
+
+[parse]
+parse_deps = false
+
+[export]
+prefix = ""
+include = ["UeBridge"]
+
+[enum]
+prefix_with_name = true
