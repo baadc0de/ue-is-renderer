@@ -1,0 +1,10 @@
+[package]
+name = "ue-authority"
+description = "Example authoritative simulation that produces WorldSnapshots for the UE renderer."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+ue-renderer-protocol = { path = "../ue-renderer-protocol" }

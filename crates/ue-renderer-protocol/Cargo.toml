@@ -1,0 +1,11 @@
+[package]
+name = "ue-renderer-protocol"
+description = "Shared state/wire contract between the authoritative Rust core and the UE renderer adapter."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+# Pure library: no external deps, no unsafe. This is the single source of truth
+# for the bytes that flow Rust -> UE (snapshots) and UE -> Rust (input).

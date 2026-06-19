@@ -46,5 +46,30 @@ June 2026) covering:
 (simulation, strategy, MMO-ish, co-op, visualization). It is a **bespoke integration you build and
 maintain**, not a turnkey "renderer mode" — so prove it with the phased PoC before committing.
 
-> Status: architecture/feasibility evaluation. No code yet; the repo is set up for a Rust-side
-> authority (see `.gitignore`).
+## Proof-of-concept scaffold
+
+The repo also contains a **compiling, tested Rust foundation** that locks down the highest-leverage
+artifact — the **Rust ↔ UE interface** — and specifies the UE side as a contract. See
+**[docs/poc.md](docs/poc.md)**.
+
+```
+crates/ue-renderer-protocol   # the Rust↔UE state/wire contract (snapshots, input, interpolation)
+crates/ue-authority           # example deterministic authoritative sim that emits snapshots
+crates/ue-bridge-ffi          # the C ABI UE links against (cdylib + staticlib)
+bridge/include/ue_bridge.h    # C header for the UE C++ plugin
+bridge/README.md              # UE-side integration contract (the C++ adapter spec)
+docs/evaluation.md            # the full feasibility evaluation
+docs/poc.md                   # what the scaffold proves, and how it maps to the phased plan
+```
+
+```sh
+cargo test --workspace                    # 11 tests
+cargo clippy --workspace --all-targets    # clean
+cargo build -p ue-bridge-ffi --release    # -> target/release/{libue_bridge_ffi.so,.a}
+```
+
+The Rust side (contract + example authority + C ABI) is real and tested. The UE 5.8 C++ adapter is
+specified in `bridge/README.md` but not committed — it requires a licensed UE install to build.
+
+> Status: feasibility evaluation **plus** a validated Rust foundation for the phased proof-of-concept
+> (docs/evaluation.md §5). Next step: build the UE C++ adapter from `bridge/README.md`.
